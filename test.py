@@ -17,9 +17,9 @@ def main():
                      InstrumentFilename='POWGEN_Definition_2011-02-25.xml',
                      WorkspaceName='ws',
                      MakeGroupingWorkspace=False)
-    for name in AnalysisDataService.Instance().getObjectNames():
-        if name.startswith('ws'):
-            DeleteWorkspace(name)
+    #for name in AnalysisDataService.Instance().getObjectNames():
+        #if name.startswith('ws'):
+            #DeleteWorkspace(name)
 
 
 if __name__ == '__main__':
