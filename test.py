@@ -15,8 +15,7 @@ def get_file():
 def main():
     ws = LoadDiffCal(Filename=str(get_file()),
                      InstrumentFilename='POWGEN_Definition_2011-02-25.xml',
-                     WorkspaceName='ws',
-                     MakeGroupingWorkspace=False)
+                     WorkspaceName='ws')
     print('loaded')
     for name in AnalysisDataService.Instance().getObjectNames():
         if name.startswith('ws'):
