@@ -1,0 +1,33 @@
+name: Run test
+
+on:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref == 'refs/heads/main' && github.run_number || github.ref }}
+  cancel-in-progress: true  # cancel jobs from previous push
+
+defaults:
+  run:
+    shell: bash -l {0}  # required for conda env
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.head_ref }}
+          fetch-depth: 0  # history required so cmake can determine version
+      - name: Setup Mambaforge and dev env
+        uses: conda-incubator/setup-miniconda@v2
+        with:
+          miniforge-version: latest
+          miniforge-variant: Mambaforge
+          python-version: 3.8
+          environment-file: env.yml
+          activate-environment: testenv
+          auto-activate-base: false
+      - run: python test.py
